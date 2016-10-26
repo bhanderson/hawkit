@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - 3.4
+  - 3.5
+  - 3.5-dev
+  - nightly
+
+
+install:
+  - pip install -r dev-requirements.txt
+  - pip install coveralls
+
+script:
+  - python hawkit/manage.py makemigrations
+  - python hawkit/manage.py migrate
+  - coverage run --source=hawkit hawkit/manage.py test
+
+after_success:
+  - coveralls
+
+notifications:
+  email: false
